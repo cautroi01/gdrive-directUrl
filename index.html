@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: wheat;
+        }
+
+        .data-input,
+        .data-output {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            gap: 5px;
+            width: 100%;
+
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            gap: 10px;
+            width: 720px;
+            background-color: beige;
+            padding: 10px;
+            box-shadow: 0 0 3px 2px rgb(0 0 0 / 50%);
+        }
+
+        form h1 {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 10px auto;
+        }
+
+        form label {
+            width: 100%;
+        }
+
+        .data-output {
+            margin: 15px auto;
+            background-color: darkkhaki;
+            padding: 10px;
+        }
+
+        form input {
+            padding: 15px;
+            width: 100%;
+        }
+
+        form button {
+            display: block;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <form class='gd' method="post" action="">
+        <h1>Simple Google drive generator</h1>
+        <div class="data-input">
+            <label for="url">
+                <input type="text" name="url" id="url" placeholder="https://drive.google.com/file/d/xxxxx/view">
+            </label>
+            <button type="submit" id="generate">Generate Direct Link</button>
+        </div>
+        <div class="data-output">
+            <label for="hasil">
+                <input type="text" name="hasil" id="hasil">
+            </label>
+            <button type="copy" id="copy" disabled>Copy</button>
+        </div>
+        <button type="reset" id="reset">Reset</button>
+    </form>
+</body>
+
+<script src="scripts.js"></script>
+
+</html>

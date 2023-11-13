@@ -1,32 +1,39 @@
 // Simple Google drive generator By arlethdesign || github.com/id-yuu
+// Refactor check valid url
 const form = document.getElementsByClassName("gd")[0];
-const url = document.querySelector("#url");
-const hasil = document.querySelector("#hasil");
+const urlInput = document.querySelector("#url");
+const resultInput = document.querySelector("#hasil");
+const copyButton = document.getElementById("copy");
+const resetButton = document.getElementById("reset");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const urlnya = url.value;
-  const dataSlice = urlnya.slice(32, -5);
-  const hasilSlice = `https://drive.google.com/uc?export=download&id=${dataSlice}`;
+  const urlValue = urlInput.value;
+  const fileId = urlValue.slice(32, -5);
+  const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
 
-  if (urlnya == "") {
-    confirm("URL is empty!");
+  const checkValues = ["https://drive.google.com/file/d/"];
+
+  const isUrlValid = checkValues.every((value) => urlValue.includes(value));
+
+  if (urlValue !== "" && isUrlValid) {
+    resultInput.value = downloadUrl;
+
+    const enableCopy = () => {
+      navigator.clipboard.writeText(resultInput.value);
+      copyButton.innerText = "Copied!";
+    };
+
+    copyButton.disabled = false;
+    copyButton.addEventListener("click", enableCopy);
+
+    resetButton.addEventListener("click", () => {
+      urlInput.value = "";
+      resultInput.value = "";
+      copyButton.disabled = true;
+      copyButton.innerText = "Copy";
+    });
   } else {
-    hasil.value = hasilSlice;
-    // Copy
-    const copyData = document.getElementById("copy");
-    copyData.disabled = false;
-    copyData.addEventListener("click", () => {
-      navigator.clipboard.writeText(hasil.value);
-      copyData.innerText = "Copied!";
-    });
-    // Reset
-    const resetData = document.getElementById("reset");
-    resetData.addEventListener("click", () => {
-      url.value = "";
-      hasil.value = "";
-      copyData.disabled = true;
-      copyData.innerText = "Copy";
-    });
+    alert("Invalid URL");
   }
 });

@@ -8,32 +8,36 @@ const resetButton = document.getElementById("reset");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const urlValue = urlInput.value;
-  const fileId = urlValue.slice(32, -5);
-  const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
 
-  const checkValues = ["https://drive.google.com/file/d/"];
+  const inputValue = urlInput.value;
+  const url = new URL(inputValue);
+  const path = url.pathname.slice(8, -5) || url.pathname.slice(8, -17);
 
-  const isUrlValid = checkValues.every((value) => urlValue.includes(value));
+  const newUrl = `https://drive.google.com/uc?export=download&id=${path}`;
 
-  if (urlValue !== "" && isUrlValid) {
-    resultInput.value = downloadUrl;
+  const copyBtn = document.getElementById("copy");
+  copyBtn.removeAttribute("disabled");
 
-    const enableCopy = () => {
-      navigator.clipboard.writeText(resultInput.value);
-      copyButton.innerText = "Copied!";
-    };
+  const isValidUrl = inputValue.includes("https://drive.google.com/file/d/");
 
-    copyButton.disabled = false;
-    copyButton.addEventListener("click", enableCopy);
+  if (inputValue !== "" && isValidUrl) {
+    resultInput.value = newUrl;
+
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(newUrl);
+      copyBtn.textContent = "Copied!";
+      copyBtn.setAttribute("disabled", true);
+      resultInput.setAttribute("disabled", true);
+    });
 
     resetButton.addEventListener("click", () => {
       urlInput.value = "";
       resultInput.value = "";
-      copyButton.disabled = true;
-      copyButton.innerText = "Copy";
+      copyBtn.textContent = "Copy";
     });
   } else {
-    alert("Invalid URL");
+    resultInput.value = "";
+    copyBtn.textContent = "Invalid URL";
+    copyBtn.setAttribute("disabled", true);
   }
 });

@@ -63,6 +63,7 @@
              const urlValue = rowObject['URL'];
              const urlElement = document.createElement('p');
              urlElement.textContent = `URL: ${urlValue}`;
+		const newUrl = ${urlValue};
              resultContainer.appendChild(urlElement);
           });
         } else {
